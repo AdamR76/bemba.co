@@ -8,6 +8,7 @@
 </head>
 <body>
 	<div class="wrap">
+		<img src="/images/logo.svg" alt="">
 		<uc:content />
 	</div>
 </body>
