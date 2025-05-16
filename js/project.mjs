@@ -39,10 +39,6 @@ const attachStyle = (parent = document.head) => {
 	return style;
 };
 
-const projectForm = ([project]) => html('form', {}, [
-	...mapItems(project.items)
-]);
-
 flow(
 	ajax({ path: 'users/checktoken', data: creds }),
 	([login]) => {
