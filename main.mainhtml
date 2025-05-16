@@ -1,3 +1,5 @@
+partials = { "head": "/partials/header.html", "foot": "/partials/footer.html" }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +9,8 @@
 	<title>Bemba Project Manager</title>
 </head>
 <body>
+	<uc:head />
 	<div class="wrap">
-		<img src="/images/logo.svg" alt="">
 		<uc:content />
 	</div>
 </body>

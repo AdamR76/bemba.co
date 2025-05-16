@@ -1,0 +1,9 @@
+@font-face {
+	font-family: 'a8b-table';
+	src: url('https://code.a8b.co/fonts/table.woff2') format('woff2'),
+		url('https://code.a8b.co/fonts/table.woff') format('woff');
+}
+
+section > table.a8b-table + nav.paging > ul > li > button {
+	font-family: 'a8b-table';
+}
