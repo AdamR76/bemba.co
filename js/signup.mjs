@@ -12,7 +12,10 @@ const signup = html('form', {
 		const values = formData(evt.target);
 		flow(
 			ajax({ path: 'users/signup', data: values }),
-			console.log
+			([login]) => { 
+				localStorage.login = JSON.stringify(login); 
+				return location = '/projects' 
+			},
 		)
 	}
 }, [
@@ -28,7 +31,7 @@ const signup = html('form', {
 		'Password',
 		html('input', { type: 'password', name: 'password', required: true, minlength: 10 })
 	]),
-	html('button', { type: 'submit' , className: 'btn'}, 'Get to Managing')
+	html('button', { type: 'submit', className: 'btn' }, 'Get to Managing')
 ]);
 
-updateElement(container, signup)
+updateElement(container, [signup, html('p', {}, 'Already have an account?'), html('p', {}, html('a', { href: '/login' }, 'Login'))])
