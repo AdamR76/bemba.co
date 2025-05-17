@@ -1,4 +1,4 @@
-:root { --highlight: #ED7D31; --green: #2E8B57 }
+:root { --highlight: #ED7D31; --green: #2E8B57; --bg-dark: #2E3436; --error: red }
 /* General */
 body { margin: 0; padding: 0; }
 .wrap { max-width: 1200px; margin: auto; width: 100%; }
@@ -9,13 +9,14 @@ body { margin: 0; padding: 0; }
 .around { justify-content: space-around; }
 .between { justify-content: space-between; }
 .vmiddle { align-items: center; }
-.btn { padding: 15px 35px; border-radius: 5px; max-width: 50%; width: 100%; margin: auto}
+.btn { padding: 15px 35px; border-radius: 5px; width: 100%; margin: auto}
 .btn:hover { box-shadow: 1px 1px 1px 1px; }
 .logo { width: 150px; height: 150px; }
 nav li { list-style-type: none; }
 a { color: var(--green); text-decoration: none; cursor: pointer; }
 p, a { font-size: 18px; }
 header { border-bottom: 1px solid black; width: 100%; background-color: #2E3436;}
+button { cursor: pointer; }
 /* Forms */
 .signup { margin: auto }
 .signup label > input { display: block; margin: 10px auto}
@@ -24,7 +25,7 @@ header { border-bottom: 1px solid black; width: 100%; background-color: #2E3436;
 
 .auto-table { border-collapse: collapse; width: 100%; padding: 0; line-height: 1.4; }
 .auto-table th, .a8b-table td { padding: 10px; }
-.auto-table th { background-color: #0D1539; color: #fff; }
+.auto-table th { background-color: var(--bg-dark); color: #fff; }
 .auto-table td, .a8b-table th { border: 1px solid #eee; }
 .paging ul {
 	display: flex;
@@ -32,3 +33,6 @@ header { border-bottom: 1px solid black; width: 100%; background-color: #2E3436;
 	justify-content: space-around;
 	list-style: none;
 }
+.statusmsg { font-size: 24px; }
+.success { color: var(--green) }
+.error { color: var(--error) }

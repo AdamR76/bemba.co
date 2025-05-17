@@ -1,2 +1,5 @@
 .paging { display: none; }
-.btn { margin:auto }
+.btn { margin: auto; background-color: var(--bg-dark); color: #fff; width: 100% }
+input, textarea, select { width: 95%; height: 60px; border: none }
+section label:first-of-type, section label:nth-of-type(2),input[name=search] { display: none; }
+ 
