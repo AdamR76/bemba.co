@@ -1,5 +1,7 @@
 .paging { display: none; }
-.btn { margin: auto; background-color: var(--bg-dark); color: #fff; width: 100% }
-input, textarea, select { width: 95%; height: 60px; border: none }
+.btn { margin: auto; background-color: var(--bg-dark); color: #fff; width: 100%; font-weight: bold; }
+.btn:hover { background-color: var(--highlight) }
+.auto-table input, .auto-table textarea, .auto-table select { width: 95%; height: 60px; border: none }
 section label:first-of-type, section label:nth-of-type(2),input[name=search] { display: none; }
- 
+.btnDelete { background-color: var(--error); color: #fff }
+span { cursor: pointer; }
