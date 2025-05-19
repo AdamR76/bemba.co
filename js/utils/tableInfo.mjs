@@ -75,10 +75,10 @@ const headers = {
 	delete: 'Remove Task'
 },
 	renderers = {
-		phases: project => html('select', { name: 'phase', 'data-id': project.projectitemid }, project.phases.map(phase => html('option', { value: phase.phaseid, selected: phase.phaseid === project.phaseid }, phase.phase))),
-		duedate: project => html('input', { type: 'date', defaultValue: project.duedate.split('T')[0], name: 'duedate', 'data-id': project.projectitemid }),
-		title: project => html('input', { type: 'text', name: 'title', value: project.title, 'data-id': project.projectitemid }),
-		description: project => html('textarea', { name: 'description', value: project.description, 'data-id': project.projectitemid }),
+		phases: project => html('select', { name: 'phase', 'data-id': project?.projectitemid }, project.phases.map(phase => html('option', { value: phase.phaseid, selected: phase.phaseid === project.phaseid }, phase.phase))),
+		duedate: project => html('input', { type: 'date', defaultValue: project?.duedate?.split('T')[0], name: 'duedate', 'data-id': project?.projectitemid }),
+		title: project => html('input', { type: 'text', name: 'title', value: project?.title, 'data-id': project?.projectitemid }),
+		description: project => html('textarea', { name: 'description', value: project?.description, 'data-id': project?.projectitemid }),
 		update: project => html('button', {
 			className: 'btn', value: project.projectitemid, onclick: evt => {
 				evt.preventDefault();

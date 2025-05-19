@@ -24,7 +24,7 @@ flow(
 	([login]) => {
 		if (login.ok) return flow(
 			ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-			project => updateElement(container, [html('h1', {}, project[0].name), table(project, renderers, headers, '', '')])
+			project => updateElement(container, [html('h1', {}, project[0].name), table(project[0].projectitemid === null ? [] : project, renderers, headers, '', '')])
 		)
 		return location = '/login.html'
 	}
