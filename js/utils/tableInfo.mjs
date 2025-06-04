@@ -111,4 +111,4 @@ const headers = {
 			buttons(project))
 	};
 
-export { headers, renderers }
+export { headers, renderers, buttons }
