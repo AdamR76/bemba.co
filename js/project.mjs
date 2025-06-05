@@ -1,25 +1,25 @@
-import { buttons, headers, renderers } from './utils/tableInfo.mjs';
 import { flow, html, querySelect, searchQuery, updateElement } from './std.mjs';
 
 import ajax from './ajax.mjs';
+import { buttons } from './utils/tableInfo.mjs';
 
 const [container] = querySelect('.container'),
-	[statusmsg] = querySelect('.statusmsg');
+    [statusmsg] = querySelect('.statusmsg');
 
 const creds = localStorage.login ? JSON.parse(localStorage.login) : {};
 
 const { pid, t } = searchQuery;
 
 const attachStyle = (parent = document.head) => {
-	const style = html('link', { rel: 'stylesheet', href: '../project.css' });
+    const style = html('link', { rel: 'stylesheet', href: '../project.css' });
 
-	if (parent) parent.append(style);
+    if (parent) parent.append(style);
 
-	return style;
+    return style;
 };
 
 const drawTasks = project => {
-    return html('div', { 
+    return html('div', {
         className: 'flex row flexwrap task',
         draggable: true,
         'data-projectitemid': project.projectitemid,
@@ -48,15 +48,14 @@ const drawTasks = project => {
             evt.preventDefault();
             const sourceId = evt.dataTransfer.getData('text/plain');
             const targetId = evt.currentTarget.dataset.projectitemid;
-            
-            if (sourceId !== targetId) {
-                // Here you would call your API to update task order
 
-								console.log('data:', { 
-									sourceId,
-									targetId,
-									pid
-							} )
+            if (sourceId !== targetId) {
+
+                console.log('data:', {
+                    sourceId,
+                    targetId,
+                    pid
+                })
                 // flow(
                 //     ajax({ 
                 //         path: 'projects/updatetaskorder', 
@@ -134,14 +133,14 @@ const drawTasks = project => {
 };
 
 flow(
-	ajax({ path: 'users/checktoken', data: creds }),
-	([login]) => {
-		if (login.ok) return flow(
-			ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-			project => updateElement(container, [html('h1', {}, project[0].name), html('div', { draggable: true }, project.map(drawTasks))])
-		)
-		return location = '/login.html'
-	}
+    ajax({ path: 'users/checktoken', data: creds }),
+    ([login]) => {
+        if (login.ok) return flow(
+            ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
+            project => updateElement(container, [html('h1', {}, project[0].name), html('div', { draggable: true }, project.map(drawTasks))])
+        )
+        return location = '/login.html'
+    }
 );
 
 attachStyle();
