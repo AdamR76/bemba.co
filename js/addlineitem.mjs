@@ -2,6 +2,7 @@ import { flow, formData, html, querySelect, searchQuery, updateElement } from ".
 import { headers, renderers } from "./utils/tableInfo.mjs";
 
 import ajax from "./ajax.mjs";
+import { drawTasks } from "./utils/utils.mjs";
 import table from "./table.mjs";
 
 const [container] = querySelect('.addform'),
@@ -21,7 +22,7 @@ const addform = users => html('form', {
 		flow(
 			ajax({ path: 'projects/addtaskitem', data: values }),
 			() => ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-			project => updateElement(projectContainer, [html('h1', {}, project[0].name), table(project, renderers, headers, '', '')]),
+			project => updateElement(projectContainer, [html('h1', {}, project[0].name), ...project.map(drawTasks)]),
 			() => querySelect('.addtheform')[0].reset()
 		).catch(err => {
 			console.error(err);

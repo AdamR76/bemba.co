@@ -21,14 +21,15 @@ const draw = () => flow(
 	updateElement(statusmsg, 'Something went wrong. Please try again later.')
 })
 
-const buttons = project => html('span', {
+const buttons = project => html('button', {
 	onclick: evt => {
 		evt.preventDefault();
 		state.delete = evt.target.dataset.id;
 		console.log(state);
 		const [deleteContainer] = querySelect(`[data-project='${state.delete}']`);
 		return state.delete && updateElement(deleteContainer, [
-			html('span', {
+			html('button', {
+				className: 'btn',
 				onclick: evt => {
 					evt.preventDefault();
 					delete state.delete;
@@ -36,9 +37,10 @@ const buttons = project => html('span', {
 				}
 
 			},
-				html('img', { src: '/images/cancel.svg', alt: 'Cancel' })
+				'Cancel'
 			),
-			html('span', {
+			html('button', {
+				className: 'btn',
 				onclick: evt => {
 					evt.preventDefault();
 					flow(
@@ -52,13 +54,16 @@ const buttons = project => html('span', {
 					})
 				}
 			},
-				html('img', { src: '/images/check.svg', alt: 'Check', 'data-id': project.projectitemid })
+				'Delete'
 			)
 		]
 		)
-	}
+	},
+	'data-id': project.projectitemid,
+	className: 'btn',
 },
-	html('img', { src: '/images/trash.svg', alt: 'Trash Can', 'data-id': project.projectitemid }))
+	'Delete Task'
+);
 
 const headers = {
 	name: null,

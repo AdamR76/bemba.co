@@ -47,5 +47,5 @@ flow(
 	}
 ).catch(err => {
 	console.error(err);
-	// return location = '/login.html'
+	return location = '/login.html'
 });

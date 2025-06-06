@@ -20,7 +20,7 @@ button { cursor: pointer; }
 form { margin: 20px 0; }
 form .grid { grid-gap: 0 10px; }
 form label { display: block; }
-form input[type=text], form input[type=email], form input[type=tel], form input[type=submit], form textarea, .btn, form select, form input[type=number] { font-size: 16px; border-radius: 3px; }
+form input[type=text], form input[type=email], form input[type=tel], form input[type=submit], form textarea, .btn, form select, form input[type=number] { font-size: 16px; border-radius: 5px; }
 form input[type=text], form input[type=email], form input[type=tel], form textarea, form select, form input[type=number], form input[type=date] { background-color: var(--light); margin-bottom: 10px; padding: 0 10px; border: none; }
 form input[type=text], form input[type=email], form input[type=tel], form select, form input[type=number], form input[type=date] { height: 50px; }
 form input[type=text], form input[type=email], form input[type=tel], form textarea, form select, form input[type=number], form input[type=date] { width: calc(100% - 20px); }
