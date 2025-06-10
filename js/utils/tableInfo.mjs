@@ -65,21 +65,7 @@ const buttons = project => html('button', {
 	'Delete Task'
 );
 
-const headers = {
-	name: null,
-	projectitemid: null,
-	title: 'Task Title',
-	duedate: 'Due',
-	phaseid: null,
-	phases: 'Phase',
-	projectid: null,
-	description: 'Task Description',
-	update: 'Update Row',
-	users: null,
-	assignto: 'Assigned To',
-	delete: 'Remove Task'
-},
-	renderers = {
+const renderers = {
 		phases: project => html('select', { name: 'phase', 'data-id': project?.projectitemid }, project.phases.map(phase => html('option', { value: phase.phaseid, selected: phase.phaseid === project.phaseid }, phase.phase))),
 		duedate: project => html('input', { type: 'date', defaultValue: project?.duedate?.split('T')[0], name: 'duedate', 'data-id': project?.projectitemid }),
 		title: project => html('input', { type: 'text', name: 'title', value: project?.title, 'data-id': project?.projectitemid }),
@@ -116,4 +102,4 @@ const headers = {
 			buttons(project))
 	};
 
-export { headers, renderers, buttons }
+export { renderers, buttons }

@@ -25,16 +25,17 @@ const onSubmit = evt => {
     evt.preventDefault();
     const values = chunk(
         querySelect('.taskform input, .taskform textarea, .taskform select')
-            .map(el => ({ [el.name]: el.value })), 6)
-        .map((el, idx) => Object.assign(...el, { weight: idx + 1 }))
+            .map(el => ({ [el.name]: el.value })), 7)
+        .map((el, idx) => Object.assign(...el, { weight: idx + 1, pid }));
+    console.log({ values, pid, creds })
     flow(
-        ajax({ path: 'projects/updatetasks', data: { values, pid, creds } })
+        ajax({ path: 'projects/updatetasks', data: { values, creds } })
     )
 };
 
 const taskform = project => html('form', 
     { draggable: true, onsubmit: onSubmit, className: 'taskform' },
-    [...grouper(project).map(drawTasks), html('button', { type: 'submit' }, 'Update Tasks')].flat(Infinity));
+    [...grouper(project).map(drawTasks), html('button', { type: 'submit', className: 'btn' }, 'Update Tasks')].flat(Infinity));
 
 flow(
     ajax({ path: 'users/checktoken', data: creds }),

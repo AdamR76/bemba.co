@@ -7,7 +7,9 @@ section label:first-of-type, section label:nth-of-type(2),input[name=search] { d
 span { cursor: pointer; }
 .deleteContainer { width: 100% }
 .deleteContainer button { width: 100%; margin: 0 1% }
-
+summary { font-size: 28px; }
+input[type=checkbox] { margin: 10px 0 15px 0 }
+details { cursor: pointer; }
 /* Draggable CSS */
 .task {
 	cursor: move;

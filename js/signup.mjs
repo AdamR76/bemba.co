@@ -12,9 +12,13 @@ const signup = html('form', {
 		const values = formData(evt.target);
 		flow(
 			ajax({ path: 'users/signup', data: values }),
-			([login]) => { 
-				localStorage.login = JSON.stringify(login); 
-				return location = '/projects.html' 
+			([login]) => {
+				if (login) {
+					localStorage.login = JSON.stringify(login);
+					return location = '/projects.html';
+				}
+				return location = '/'
+
 			},
 		)
 	}

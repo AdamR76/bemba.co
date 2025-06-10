@@ -12,8 +12,11 @@ const loginForm = html('form', {
 		flow(
 			ajax({ path: 'users/login', data: values }),
 			([login]) => {
-				localStorage.login = JSON.stringify(login);
-				return location = '/projects.html'
+				if (login) {
+					localStorage.login = JSON.stringify(login);
+					return location = '/projects.html';
+				}
+				return location = '/login.html'
 			}
 		).catch(console.error)
 	}

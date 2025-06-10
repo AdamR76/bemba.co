@@ -8,8 +8,10 @@ const chunk = (arr, size) => {
 	return [head, ...chunk(tail, size)];
 };
 
+
 const drawTasks = projects => {
-	return projects.map(project => html('div', {
+	const [{ projectcat }] = projects;
+	return html('details', { open: true }, [html('summary', {}, projectcat), ...projects.map(project => html('div', {
 		className: 'flex row flexwrap task',
 		draggable: true,
 		'data-projectitemid': project.projectitemid,
@@ -61,9 +63,10 @@ const drawTasks = projects => {
 				'Assign To',
 				html('select', { name: 'assignto', 'data-id': project.projectitemid }, project.users.concat({ name: 'Not Assigned', userid: 0 }).reverse().map(user => html('option', { value: user.userid, selected: user.userid === project.assignto }, user.name))),
 			]),
-			html('input', { type: 'hidden', name: 'projectitemid', value: project.projectitemid })
+			html('input', { type: 'hidden', name: 'projectitemid', value: project.projectitemid }),
+			html('input', { type: 'hidden', name: 'projectcatid', value: project.projectcatid })
 		]),
-	]));
+	]))]);
 };
 
 const grouper = tasks => {
