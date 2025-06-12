@@ -20,15 +20,14 @@ button { cursor: pointer; }
 form { margin: 20px 0; }
 form .grid { grid-gap: 0 10px; }
 form label { display: block; }
-form input[type=text], form input[type=email], form input[type=tel], form input[type=submit], form textarea, .btn, form select, form input[type=number] { font-size: 16px; border-radius: 5px; }
-form input[type=text], form input[type=email], form input[type=tel], form textarea, form select, form input[type=number], form input[type=date] { background-color: var(--light); margin-bottom: 10px; padding: 0 10px; border: none; }
-form input[type=text], form input[type=email], form input[type=tel], form select, form input[type=number], form input[type=date] { height: 50px; }
-form input[type=text], form input[type=email], form input[type=tel], form textarea, form select, form input[type=number], form input[type=date] { width: calc(100% - 20px); }
-form textarea { height: 150px; padding: 15px 10px; }
-form input[type=submit], .btn { display: inline-block; min-width: 110px; text-align: center; line-height: 1.6; padding: 10px 40px; margin: 10px 0; border: none; transition: ease-in-out .3s; }
+form input[type=text], form input[type=email], form input[type=tel], form input[type=submit], form textarea, .btn, form select, form input[type=number], form input[type=password] { font-size: 16px; border-radius: 5px; }
+form input[type=text], form input[type=email], form input[type=tel], form textarea, form select, form input[type=number], form input[type=date], form input[type=password] { background-color: var(--light); margin-bottom: 10px; padding: 0 10px; border: none; }
+form input[type=text], form input[type=email], form input[type=tel], form select, form input[type=number], form input[type=date], form input[type=password] { height: 50px; }
+form input[type=text], form input[type=email], form input[type=tel], form textarea, form select, form input[type=number], form input[type=date], form input[type=password] { width: calc(100% - 20px); }
+form input[type=submit], .btn { display: inline-block;text-align: center; line-height: 1.6; padding: 10px 40px; margin: 10px 0; border: none; transition: ease-in-out .3s; background-color: var(--bg-dark); color: #fff }
 form input[type=submit] { min-width: 250px; margin: 0; }
 form input, form textarea, ::placeholder { color: var(--dark); }
-form input[type=submit]:hover, .btn:hover { color: var(--primary-comp); }
+form input[type=submit]:hover, .btn:hover { background-color: var(--highlight); }
 form input, form textarea { outline: none; }
 .signup { margin: auto }
 form label > input { display: block; margin: 10px auto}

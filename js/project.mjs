@@ -1,7 +1,7 @@
-import { chunk, drawTasks, grouper } from './utils/utils.mjs';
-import { flow, formData, html, querySelect, searchQuery, updateElement } from './std.mjs';
+import { flow, html, querySelect, searchQuery, updateElement } from './std.mjs';
 
 import ajax from './ajax.mjs';
+import { taskform } from './utils/utils.mjs';
 
 const [container] = querySelect('.container'),
     [statusmsg] = querySelect('.statusmsg');
@@ -18,29 +18,10 @@ const attachStyle = (parent = document.head) => {
     return style;
 };
 
-
-
-
-const onSubmit = evt => {
-    evt.preventDefault();
-    const values = chunk(
-        querySelect('.taskform input, .taskform textarea, .taskform select')
-            .map(el => ({ [el.name]: el.value })), 7)
-        .map((el, idx) => Object.assign(...el, { weight: idx + 1, pid }));
-    console.log({ values, pid, creds })
-    flow(
-        ajax({ path: 'projects/updatetasks', data: { values, creds } })
-    )
-};
-
-const taskform = project => html('form', 
-    { draggable: true, onsubmit: onSubmit, className: 'taskform' },
-    [...grouper(project).map(drawTasks), html('button', { type: 'submit', className: 'btn' }, 'Update Tasks')].flat(Infinity));
-
 flow(
     ajax({ path: 'users/checktoken', data: creds }),
     ([login]) => {
-        if (login.ok) return flow(
+        if (login?.ok) return flow(
             ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
             project => project[0]?.name ? updateElement(container, [
                 html('h1', {}, project[0].name),

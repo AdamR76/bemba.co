@@ -1,5 +1,13 @@
-import { buttons } from "./tableInfo.mjs";
-import { html } from "../std.mjs";
+import { flow, html, querySelect, searchQuery, updateElement } from "../std.mjs";
+
+import ajax from "../ajax.mjs";
+import { buttons } from "./task-utils.mjs";
+import { drawMetrics } from "./metrics.mjs";
+
+const [container] = querySelect('.container');
+
+const { pid, t } = searchQuery;
+const creds = localStorage.login ? JSON.parse(localStorage.login) : {};
 
 const chunk = (arr, size) => {
 	if (!arr.length) return [];
@@ -7,6 +15,25 @@ const chunk = (arr, size) => {
 	const tail = arr.slice(size);
 	return [head, ...chunk(tail, size)];
 };
+
+const onSubmit = (evt, fn) => {
+	evt.preventDefault();
+	const values = chunk(
+			querySelect('.taskform input, .taskform textarea, .taskform select')
+					.map(el => ({ [el.name]: el.value })), 7)
+			.map((el, idx) => Object.assign(...el, { weight: idx + 1, pid }));
+	console.log({ values, pid, creds })
+	flow(
+			ajax({ path: 'projects/updatetasks', data: { values, creds } }),
+			() => ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
+			project => updateElement(container, fn(project))
+	)
+};
+
+
+const taskform = project => html('form', 
+	{ draggable: true, onsubmit: evt => onSubmit(evt, taskform), className: 'taskform' },
+	[drawMetrics(project), ...grouper(project).map(drawTasks), html('button', { type: 'submit', className: 'btn' }, 'Update Tasks')].flat(Infinity));
 
 
 const drawTasks = projects => {
@@ -53,15 +80,22 @@ const drawTasks = projects => {
 		html('div', {}, [
 			html('label', {}, [
 				'Phase',
-				html('select', { name: 'phase', 'data-id': project?.projectitemid }, project.phases.map(phase => html('option', { value: phase.phaseid, selected: phase.phaseid === project.phaseid }, phase.phase)))
+				html('select', { name: 'phase', 'data-id': project?.projectitemid }, project.phases.map(phase =>
+					html('option', { value: phase.phaseid, selected: phase.phaseid === project.phaseid }, phase.phase)))
 			]),
 			html('label', {}, [
 				'Due',
-				html('input', { type: 'date', defaultValue: project?.duedate?.split('T')[0], name: 'duedate', 'data-id': project?.projectitemid }),
+				html('input', {
+					type: 'date', defaultValue: project?.duedate?.split('T')[0],
+					name: 'duedate', 'data-id': project?.projectitemid
+				}),
 			]),
 			html('label', {}, [
 				'Assign To',
-				html('select', { name: 'assignto', 'data-id': project.projectitemid }, project.users.concat({ name: 'Not Assigned', userid: 0 }).reverse().map(user => html('option', { value: user.userid, selected: user.userid === project.assignto }, user.name))),
+				html('select', { name: 'assignto', 'data-id': project.projectitemid },
+					project.users.concat({ name: 'Not Assigned', userid: 0 })
+						.reverse().map(user =>
+							html('option', { value: user.userid, selected: user.userid === project.assignto }, user.name))),
 			]),
 			html('input', { type: 'hidden', name: 'projectitemid', value: project.projectitemid }),
 			html('input', { type: 'hidden', name: 'projectcatid', value: project.projectcatid })
@@ -83,9 +117,12 @@ const grouper = tasks => {
 
 }
 
+
+
 export {
 	chunk,
 	drawTasks,
-	grouper
+	grouper,
+	taskform
 }
 

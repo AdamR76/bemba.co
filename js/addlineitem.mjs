@@ -1,4 +1,4 @@
-import { drawTasks, grouper } from "./utils/utils.mjs";
+import { drawTasks, grouper, taskform } from "./utils/utils.mjs";
 import { flow, formData, html, querySelect, searchQuery, updateElement, waitAll } from "./std.mjs";
 
 import ajax from "./ajax.mjs";
@@ -19,11 +19,12 @@ const addform = (users, cats, fn) => html('form', {
 		evt.preventDefault();
 		const values = Object.assign(Object.fromEntries(Object.entries(formData(evt.target))
 			.map(([key, value]) => [key, key === 'assignto' && value === '0' ? null : value])), { pid });
-			console.log(values)
+		console.log(values)
 		flow(
 			ajax({ path: 'projects/addtaskitem', data: values }),
 			() => ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-			project => updateElement(projectContainer, [html('h1', {}, project[0].name), ...grouper(project).map(drawTasks), html('button', { type: 'submit', className: 'btn' }, 'Update Tasks')]),
+			project => updateElement(projectContainer, [html('h1', {}, project[0].name), 
+			taskform(project)]),
 			() => querySelect('.addtheform')[0].reset()
 		).catch(err => {
 			console.error(err);
@@ -32,6 +33,17 @@ const addform = (users, cats, fn) => html('form', {
 		})
 	}
 }, [
+	html('label', { className: 'flex row vmiddle around pop' }, [
+		'Add New Category?',
+		html('input', {
+			type: 'checkbox', onclick: evt => {
+				evt.preventDefault();
+				state.newcat = state.newcat ? 0 : 1;
+				return fn();
+			},
+			checked: state.newcat
+		})
+	]),
 	html('label', {}, [
 		'Task Name',
 		html('input', { type: 'text', name: 'title', required: true })
@@ -47,20 +59,10 @@ const addform = (users, cats, fn) => html('form', {
 	]),
 	html('label', {}, [
 		'Category',
-		state.newcat
+		state.newcat || !cats.length
 			? html('input', { type: 'text', name: 'cat' })
-			: html('select', { name: 'cat' }, cats.map(cat => html('option', { value: cat.projectcatid }, cat.projectcat)))
-	]),
-	html('label', {}, [
-		'Add New Category?', // preserve state
-		html('input', {
-			type: 'checkbox', onclick: evt => {
-				evt.preventDefault();
-				state.newcat = state.newcat ? 0 : 1;
-				return fn();
-			},
-			checked: state.newcat
-		})
+			: html('select', { name: 'cat' }, cats.map(cat => 
+				html('option', { value: cat.projectcatid }, cat.projectcat)))
 	]),
 	html('label', {}, [
 		'Due Date',

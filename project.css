@@ -1,8 +1,6 @@
 .paging { display: none; }
 .btn { margin: auto; background-color: var(--bg-dark); color: #fff; width: 100%; font-weight: bold; }
 .btn:hover { background-color: var(--highlight) }
-.auto-table input, .auto-table textarea, .auto-table select { width: 95%; height: 60px; border: none }
-section label:first-of-type, section label:nth-of-type(2),input[name=search] { display: none; }
 .btnDelete { background-color: var(--error); color: #fff }
 span { cursor: pointer; }
 .deleteContainer { width: 100% }
@@ -10,6 +8,10 @@ span { cursor: pointer; }
 summary { font-size: 28px; }
 input[type=checkbox] { margin: 10px 0 15px 0 }
 details { cursor: pointer; }
+.metrics p { font-size: 18px; font-weight: bold;}
+.pop { background-color: var(--bg-dark); color: #fff; margin: 10px 0 }
+
+
 /* Draggable CSS */
 .task {
 	cursor: move;
@@ -24,7 +26,7 @@ details { cursor: pointer; }
 }
 
 .task input, .task select, .task textarea { width: 100%; height: 40px; border-radius: 3px; border: none; background-color: #f9f9f9; }
-.task textarea { height: 100px }
+.task textarea { height: 50px }
 .task div:first-of-type {	width: 50% }
 .task span { margin: 20px auto; }
 
