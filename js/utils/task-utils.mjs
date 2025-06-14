@@ -1,7 +1,8 @@
-import { drawTasks, grouper, taskform } from "./utils.mjs";
+/* eslint-disable id-length */
 import { flow, html, querySelect, searchQuery, updateElement } from "../std.mjs";
 
 import ajax from "../ajax.mjs";
+import { taskform } from "./utils.mjs";
 
 const [statusmsg] = querySelect('.statusmsg'),
 	[projectContainer] = querySelect('.container'),

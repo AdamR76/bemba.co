@@ -33,7 +33,7 @@ const onSubmit = (evt, fn) => {
 
 const taskform = project => html('form',
 	{ draggable: true, onsubmit: evt => onSubmit(evt, taskform), onchange: evt => onSubmit(evt, taskform), className: 'taskform' },
-	[drawMetrics(project), ...grouper(project).map(drawTasks)].flat(Infinity));
+	[drawMetrics(project), html('h1', {}, project[0].name), ...grouper(project).map(drawTasks)].flat(Infinity));
 
 
 const drawTasks = projects => {

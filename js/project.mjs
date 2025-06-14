@@ -1,3 +1,4 @@
+/* eslint-disable id-length */
 import { flow, html, querySelect, searchQuery, updateElement } from './std.mjs';
 
 import ajax from './ajax.mjs';

@@ -6,14 +6,16 @@ const [container] = querySelect('.container');
 
 const creds = localStorage.login ? JSON.parse(localStorage.login) : {};
 
-const showProjects = projects => html('ul', {}, projects.map(project => html('li', {}, html('a', { href: `project.html?pid=${project.projectid}&t=${project.token}` }, project.name))));
+const showProjects = projects =>
+	html('ul', {}, projects.map(project =>
+		html('li', {}, html('a', { href: `project.html?pid=${project.projectid}&t=${project.token}` }, project.name))));
 
 const addNewProject = users => html('form', {
 	onsubmit: evt => {
 		evt.preventDefault();
 		const values = formData(evt.target),
 			users = Object.keys(values).map(Number).filter(Boolean).map(user => values[user] && user);
-		const projectdata = Object.assign(values, { users: users });
+		const projectdata = Object.assign(values, { users });
 		console.log(projectdata)
 		return flow(
 			ajax({ path: 'projects/addproject', data: projectdata }),
@@ -41,7 +43,12 @@ flow(
 				ajax({ path: 'projects/getallusers', data: {} })
 			]),
 			waitAll,
-			([projects, users]) => updateElement(container, [showProjects(projects), html('h2', {}, 'Add New Project'), addNewProject(users)])
+			([projects, users]) =>
+				updateElement(container, [
+					showProjects(projects),
+					html('h2', {}, 'Add New Project'),
+					addNewProject(users)
+				])
 		)
 		return location = '/login.html'
 	}

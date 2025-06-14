@@ -38,4 +38,8 @@ const signup = html('form', {
 	html('button', { type: 'submit', className: 'btn' }, 'Get to Managing')
 ]);
 
-updateElement(container, [signup, html('p', {}, 'Already have an account?'), html('p', {}, html('a', { href: '/login.html' }, 'Login'))])
+updateElement(container, [
+	signup,
+	html('p', {}, 'Already have an account?'),
+	html('p', {}, html('a', { href: '/login.html' }, 'Login'))
+]);
