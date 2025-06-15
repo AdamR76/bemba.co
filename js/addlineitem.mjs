@@ -24,10 +24,19 @@ const addform = (users, cats, fn) => html('form', {
 		console.log(values)
 		flow(
 			ajax({ path: 'projects/addtaskitem', data: values }),
-			() => ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-			project => updateElement(projectContainer, [html('h1', {}, project[0].name), 
-			taskform(project)]),
-			() => querySelect('.addtheform')[0].reset()
+			() => Promise.all([
+				ajax({ path: 'projects/getusers', data: { pid, t } }),
+				ajax({ path: 'projects/getprojectcats', data: { pid, t } }),
+				ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
+			]),
+			waitAll,
+			([users, cats, project]) => {
+				updateElement(projectContainer, [html('h1', {}, project[0].name),
+				taskform(project)]);
+				// eslint-disable-next-line no-use-before-define
+				updateElement(container, [html('h2', {}, 'Add Task'), addform(users, cats, draw)])
+			},
+			() => delete state.newcat
 		).catch(err => {
 			console.error(err);
 			statusmsg.classList.add('error');
@@ -35,7 +44,7 @@ const addform = (users, cats, fn) => html('form', {
 		})
 	}
 }, [
-	html('label', { className: 'flex row vmiddle around pop' }, [
+	cats.length && html('label', { className: 'flex row vmiddle around pop' }, [
 		'Add New Category?',
 		html('input', {
 			type: 'checkbox', onclick: evt => {
@@ -63,7 +72,7 @@ const addform = (users, cats, fn) => html('form', {
 		'Category',
 		state.newcat || !cats.length
 			? html('input', { type: 'text', name: 'cat' })
-			: html('select', { name: 'cat' }, cats.map(cat => 
+			: html('select', { name: 'cat' }, cats.map(cat =>
 				html('option', { value: cat.projectcatid }, cat.projectcat)))
 	]),
 	html('label', {}, [

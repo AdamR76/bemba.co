@@ -39,7 +39,7 @@ const taskform = project => html('form',
 const drawTasks = projects => {
 	const [{ projectcat }] = projects;
 	return html('details', { open: true }, [html('summary', {}, projectcat), ...projects.map(project => html('div', {
-		className: `flex row flexwrap task ${project.phaseid === 5 ? 'done' : ''}`,
+		className: `flex row flexwrap task ${project.phaseid === 4 ? 'done' : ''}`,
 		draggable: true,
 		'data-projectitemid': project.projectitemid,
 		ondragstart: evt => {
