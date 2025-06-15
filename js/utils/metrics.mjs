@@ -4,8 +4,10 @@ const drawMetrics = project => {
 	const completed = project.filter(task => task.phaseid === 4).length;
 	const projectItems = project.length,
 		percentComplete = `${Math.round(parseFloat(completed / (projectItems || 1)) * 100)}%`;
-	return projectItems.length && html('div', { className: 'metrics' }, [
-		html('p', {}, html('strong', {}, ['Progress: ', `${completed}/${projectItems} ${percentComplete}`])),
+	return html('div', { className: 'metrics' }, [
+		projectItems.length
+			? html('p', {}, html('strong', {}, ['Progress: ', `${completed}/${projectItems} ${percentComplete}`]))
+			: 'No Task Items',
 	])
 };
 
