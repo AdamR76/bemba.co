@@ -14,7 +14,7 @@ const state = {};
 
 const draw = () => flow(
 	ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-	project => updateElement(projectContainer, [html('h1', {}, project[0].name), 
+	project => updateElement(projectContainer, [html('h1', {}, project[0]?.name || ''), 
 	taskform(project)]),
 	() => querySelect('.addtheform')[0].reset()
 ).catch(err => {
