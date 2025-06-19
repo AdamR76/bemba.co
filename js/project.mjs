@@ -25,7 +25,6 @@ flow(
         if (login?.ok) return flow(
             ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
             project => project[0]?.name ? updateElement(container, [
-                html('h1', {}, project[0].name),
                 taskform(project)
             ])
                 : updateElement(container, html('p', {}, 'No tasks yet'))

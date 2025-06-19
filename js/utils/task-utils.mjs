@@ -8,14 +8,13 @@ const [statusmsg] = querySelect('.statusmsg'),
 	[projectContainer] = querySelect('.container'),
 	creds = localStorage.login ? JSON.parse(localStorage.login) : {};
 
-	const { pid, t } = searchQuery;
+const { pid, t } = searchQuery;
 
 const state = {};
 
 const draw = () => flow(
 	ajax({ path: 'projects/getproject', data: { token: creds.token, t, pid } }),
-	project => updateElement(projectContainer, [html('h1', {}, project[0]?.name || ''), 
-	taskform(project)]),
+	project => updateElement(projectContainer, taskform(project)),
 	() => querySelect('.addtheform')[0].reset()
 ).catch(err => {
 	console.error(err);
@@ -50,9 +49,9 @@ const buttons = project => html('button', {
 						() => delete state.delete,
 						() => draw()
 					).catch(err => {
-						console.error(err),
+						console.error(err);
 						statusmsg.classList.add('error');
-						updateElement(statusmsg, 'Something went wrong. Please try again later.')
+						return updateElement(statusmsg, 'Something went wrong. Please try again later.')
 					})
 				}
 			},

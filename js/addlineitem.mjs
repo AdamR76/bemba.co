@@ -31,8 +31,7 @@ const addform = (users, cats, fn) => html('form', {
 			]),
 			waitAll,
 			([users, cats, project]) => {
-				updateElement(projectContainer, [html('h1', {}, project[0].name),
-				taskform(project)]);
+				updateElement(projectContainer, [taskform(project)]);
 				// eslint-disable-next-line no-use-before-define
 				updateElement(container, [html('h2', {}, 'Add Task'), addform(users, cats, draw)])
 			},
@@ -57,7 +56,7 @@ const addform = (users, cats, fn) => html('form', {
 	]),
 	html('label', {}, [
 		'Task Name',
-		html('input', { type: 'text', name: 'title', required: true })
+		html('input', { type: 'text', name: 'title', required: true, autocomplete: 'off' })
 	]),
 	html('label', {}, [
 		'Task Description',

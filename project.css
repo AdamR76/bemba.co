@@ -10,6 +10,7 @@ input[type=checkbox] { margin: 10px 0 15px 0 }
 details { cursor: pointer; }
 .metrics p { font-size: 18px; font-weight: bold;}
 .pop { background-color: var(--bg-dark); color: #fff; margin: 10px 0 }
+.addform { position: sticky !important; bottom: 350px; top: 10px; border: 1px solid black; padding: 10px; border-radius: 4px; }
 
 .done {
 	border-radius: 8px;

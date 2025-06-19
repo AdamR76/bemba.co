@@ -2,7 +2,6 @@ import { flow, html, querySelect, searchQuery, updateElement } from "../std.mjs"
 
 import ajax from "../ajax.mjs";
 import { buttons } from "./task-utils.mjs";
-import { drawMetrics } from "./metrics.mjs";
 
 const [container] = querySelect('.container');
 
@@ -15,6 +14,20 @@ const chunk = (arr, size) => {
 	const tail = arr.slice(size);
 	return [head, ...chunk(tail, size)];
 };
+
+const grouper = tasks => {
+	const groupedCats = new Map();
+	tasks.forEach(task => {
+		const { projectcatid } = task;
+		if (!groupedCats.has(projectcatid)) {
+			groupedCats.set(projectcatid, []);
+		}
+		groupedCats.get(projectcatid).push(task);
+	});
+
+	return Array.from(groupedCats.values());
+
+}
 
 const onSubmit = (evt, fn) => {
 	evt.preventDefault();
@@ -32,8 +45,13 @@ const onSubmit = (evt, fn) => {
 
 
 const taskform = project => html('form',
-	{ draggable: true, onsubmit: evt => onSubmit(evt, taskform), onchange: evt => onSubmit(evt, taskform), className: 'taskform' },
-	[drawMetrics(project), html('h1', {}, project[0]?.name || ''), ...grouper(project).map(drawTasks)].flat(Infinity));
+	{
+		draggable: true,
+		onsubmit: evt => onSubmit(evt, taskform),
+		onchange: evt => onSubmit(evt, taskform), className: 'taskform'
+	},
+	// eslint-disable-next-line no-use-before-define
+	[html('h1', {}, project[0]?.name || ''), ...grouper(project).map(drawTasks)].flat(Infinity));
 
 
 const drawTasks = projects => {
@@ -75,7 +93,10 @@ const drawTasks = projects => {
 				html('select', { name: 'assignto', 'data-id': project.projectitemid },
 					project.users.concat({ name: 'Not Assigned', userid: 0 })
 						.reverse().map(user =>
-							html('option', { value: user.userid, selected: user.userid === project.assignto }, user.name))),
+							html('option', {
+								value: user.userid,
+								selected: user.userid === project.assignto
+							}, user.name))),
 			]),
 			html('label', {}, [
 				'Phase',
@@ -103,21 +124,6 @@ const drawTasks = projects => {
 		]),
 	]))]);
 };
-
-const grouper = tasks => {
-	const groupedCats = new Map();
-	tasks.forEach(task => {
-		const { projectcatid } = task;
-		if (!groupedCats.has(projectcatid)) {
-			groupedCats.set(projectcatid, []);
-		}
-		groupedCats.get(projectcatid).push(task);
-	});
-
-	return Array.from(groupedCats.values());
-
-}
-
 
 
 export {
