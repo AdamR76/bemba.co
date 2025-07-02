@@ -25,9 +25,9 @@ const draw = () => flow(
 const buttons = project => html('button', {
 	onclick: evt => {
 		evt.preventDefault();
-		state.delete = evt.target.dataset.id;
+		state.delete = evt.target.value;
 		console.log(state);
-		const [deleteContainer] = querySelect(`[data-project='${state.delete}']`);
+		const [deleteContainer] = querySelect(`.project${state.delete}`);
 		return state.delete && updateElement(deleteContainer, [
 			html('button', {
 				className: 'btn',
@@ -60,7 +60,7 @@ const buttons = project => html('button', {
 		]
 		)
 	},
-	'data-id': project.projectitemid,
+	value: project.projectitemid,
 	className: 'btn',
 },
 	'Delete Task'

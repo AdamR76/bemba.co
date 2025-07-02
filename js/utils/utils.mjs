@@ -57,9 +57,9 @@ const taskform = project => html('form',
 const drawTasks = projects => {
 	const [{ projectcat }] = projects;
 	return html('details', { open: true }, [html('summary', {}, projectcat), ...projects.map(project => html('div', {
+		// eslint-disable-next-line max-len
 		className: `flex row flexwrap task ${project.phaseid === 4 ? 'done' : ''}`,
 		draggable: true,
-		'data-projectitemid': project.projectitemid,
 		ondragstart: evt => {
 			evt.dataTransfer.setData('text/plain', project.projectitemid);
 			evt.target.classList.add('dragging');
@@ -90,7 +90,7 @@ const drawTasks = projects => {
 			]),
 			html('label', {}, [
 				'Assign To',
-				html('select', { name: 'assignto', 'data-id': project.projectitemid },
+				html('select', { name: 'assignto', className: `project-phase${project?.projectitemid}` },
 					project.users.concat({ name: 'Not Assigned', userid: 0 })
 						.reverse().map(user =>
 							html('option', {
@@ -100,11 +100,11 @@ const drawTasks = projects => {
 			]),
 			html('label', {}, [
 				'Phase',
-				html('select', { name: 'phase', 'data-id': project?.projectitemid }, project.phases.map(phase =>
+				html('select', { name: 'phase', className: `project-phase${project?.projectitemid}` }, project.phases.map(phase =>
 					html('option', { value: phase.phaseid, selected: phase.phaseid === project.phaseid }, phase.phase)))
 			]),
 
-			html('div', { className: 'deleteContainer flex row around', 'data-project': project.projectitemid },
+			html('div', { className: `deleteContainer flex row around project${project.projectitemid}` },
 				buttons(project))
 		]),
 		html('div', { className: 'flex column' }, [
@@ -116,7 +116,7 @@ const drawTasks = projects => {
 				'Due',
 				html('input', {
 					type: 'date', defaultValue: project?.duedate?.split('T')[0],
-					name: 'duedate', 'data-id': project?.projectitemid
+					name: 'duedate', className: `project-due${project?.projectitemid}`
 				}),
 			]),
 			html('input', { type: 'hidden', name: 'projectitemid', value: project.projectitemid }),
